@@ -14,8 +14,10 @@ class TreeNode {
             left = NULL;
             right = NULL;
         }
-        void draw(int res) {
+        void draw(SimpleCanvas& canvas) {
+            canvas.drawLine(10, 10, canvas.width-10, canvas.height-10, 5, 0, 150, 0);
 
+            canvas.fillCircle(canvas.width/2, canvas.height/2, 10, 0, 0, 0);
         }
         void inorder() {
             if (left != NULL) {
@@ -49,7 +51,7 @@ class BinaryTree {
             SimpleCanvas canvas(res, res);
             canvas.clearRect(255, 255, 255);
             canvas.drawString("A Tree!", 10, 10, "simplecanvas/");
-            root->draw(res);
+            root->draw(canvas);
             canvas.write("tree.png");
         }
         void inorder() {
