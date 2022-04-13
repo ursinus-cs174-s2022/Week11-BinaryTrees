@@ -28,10 +28,6 @@ class TreeNode {
             int x1 = 10+x*(canvas.width-20)/xMax;
             int y1 = 10+y*(canvas.height-20)/maxDepth;
             stringstream stream;
-            stream << key;
-            canvas.fillCircle(x1, y1, 10, 0, 0, 0);
-            canvas.drawString(stream.str(), x1+12, y1-10, "simplecanvas/");
-
             if (left != NULL) {
                 int x2 = 10+left->x*(canvas.width-20)/xMax;
                 int y2 = 10+left->y*(canvas.height-20)/maxDepth;
@@ -44,6 +40,9 @@ class TreeNode {
                 canvas.drawLine(x1, y1, x2, y2, 0, 0, 0);   
                 right->draw(canvas, xMax, maxDepth);
             }
+            stream << key;
+            canvas.fillCircle(x1, y1, 10, 100, 255, 255);
+            canvas.drawString(stream.str(), x1-8, y1-8, "simplecanvas/");
         }
 
         /**
