@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <stdio.h>
+#include <math.h>
 #include "simplecanvas/simplecanvas.h"
 using namespace std;
 
@@ -14,10 +15,27 @@ class TreeNode {
             left = NULL;
             right = NULL;
         }
-        void draw(SimpleCanvas& canvas) {
-            canvas.drawLine(10, 10, canvas.width-10, canvas.height-10, 5, 0, 150, 0);
-
-            canvas.fillCircle(canvas.width/2, canvas.height/2, 10, 0, 0, 0);
+        void draw(SimpleCanvas& canvas, int depth, int x, int y, bool isRight) {
+            depth++;
+            string str = to_string(value);
+            int newY = y + 30;
+            int newX;
+            if(isRight){
+                newX = x + canvas.width/pow(2, depth);
+            }
+            else{
+                newX = x - canvas.width/pow(2, depth);
+            }
+            canvas.fillCircle(newX, newY, 10, 240, 240, 0);
+            canvas.drawString(str, newX-8, newY-8, "simplecanvas/");
+            //draw a line
+            canvas.drawLine(x, y, newX, newY, 0, 240, 0);
+            if(left != NULL){
+                left->draw(canvas, depth, newX, newY, false);
+            }
+            if(right != NULL){
+                right->draw(canvas, depth, newX, newY, true);
+            }
         }
         void inorder() {
             if (left != NULL) {
@@ -51,7 +69,7 @@ class BinaryTree {
             SimpleCanvas canvas(res, res);
             canvas.clearRect(255, 255, 255);
             canvas.drawString("A Tree!", 10, 10, "simplecanvas/");
-            root->draw(canvas);
+            root->draw(canvas, 0, 0, 0, true);
             canvas.write("tree.png");
         }
         void inorder() {
